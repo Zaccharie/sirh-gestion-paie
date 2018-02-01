@@ -2,13 +2,33 @@ package dev.paie.entite;
 
 import java.math.BigDecimal;
 
-public class Avantage {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Avantage {
+	
+	@Id
+	@GeneratedValue
 	private Integer id;
+	
 	private String code;
 	private String nom;
 	private BigDecimal montant;
-
+	
+	//constructor
+	public Avantage() {
+		
+	}
+	
+	public Avantage(String code, String nom, BigDecimal montant) {
+		this.code = code;
+		this.nom = nom;
+		this.montant = montant;
+	}
+	
+	//getters and setters
 	public String getCode() {
 		return code;
 	}

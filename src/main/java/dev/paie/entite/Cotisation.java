@@ -13,7 +13,7 @@ public class Cotisation {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String code;
 	private String libelle;
 	private BigDecimal tauxSalarial;
