@@ -2,15 +2,35 @@ package dev.paie.entite;
 
 import java.math.BigDecimal;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class BulletinSalaire {
 	
+	@Id
+	@GeneratedValue
 	private Integer id;
-	private RemunerationEmploye remunerationEmploye;
-	private Periode periode;
-	private BigDecimal primeExceptionnelle;
 	
+	private BigDecimal primeExceptionnelle;
+
+	@ManyToOne
+	@JoinColumn(name="EMPLOYE_ID")
+	private RemunerationEmploye remunerationEmploye;
+	
+	@ManyToOne
+	@JoinColumn(name="PERIODE_ID")
+	private Periode periode;
+	
+	//constructor
+	public BulletinSalaire() {
+		
+	}
+	
+	//getters and setters
 	public RemunerationEmploye getRemunerationEmploye() {
 		return remunerationEmploye;
 	}

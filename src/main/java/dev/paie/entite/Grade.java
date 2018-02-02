@@ -2,13 +2,22 @@ package dev.paie.entite;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Grade {
 	
+	@Id
+	@GeneratedValue
 	private Integer id;
+	
 	private String code;
 	private BigDecimal nbHeuresBase;
 	private BigDecimal tauxBase;
 	
+	//constructor
 	public Grade() {
 		
 	}
@@ -19,6 +28,7 @@ public class Grade {
 		this.tauxBase = tauxBase;
 	}
 	
+	//getters and setters
 	public String getCode() {
 		return code;
 	}
