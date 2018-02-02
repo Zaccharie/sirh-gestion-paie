@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Avantage;
@@ -20,8 +18,8 @@ import dev.paie.entite.Avantage;
 @ContextConfiguration(classes = {ServicesConfig.class})
 
 @RunWith(SpringRunner.class)
-@Transactional
 public class AvantageRepositoryTest {
+	
 	@Autowired
 	private AvantageRepository avantageRepository;
 	
