@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @Import(ServicesConfig.class)
-@ComponentScan("dev.paie.web.controller")
+@ComponentScan({"dev.paie.web.controller", "dev.paie.web.listener"})
 public class WebAppConfig {
 	@Bean
 	public ViewResolver viewResolver() {

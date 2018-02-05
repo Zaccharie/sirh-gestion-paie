@@ -21,6 +21,7 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
+		
 		ResultatCalculRemuneration resultat = new ResultatCalculRemuneration();
 		Grade g = bulletin.getRemunerationEmploye().getGrade();
 		ProfilRemuneration pr = bulletin.getRemunerationEmploye().getProfilRemuneration();
