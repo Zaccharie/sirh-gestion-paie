@@ -70,7 +70,7 @@
                     		<td>${b.getValue().salaireBrut }</td>
                     		<td>${b.value.netImposable }</td>
                     		<td>${b.value.netAPayer }</td>
-                    		<td>Visualiser</td>
+                    		<td><a href='<c:url value='/mvc/bulletins/lister/${b.key.id}'></c:url>'>Visualiser</a></td>
                     	</tr>
                     </c:forEach>
                     </tbody>

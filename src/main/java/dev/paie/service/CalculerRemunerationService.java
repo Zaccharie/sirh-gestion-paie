@@ -10,4 +10,7 @@ public interface CalculerRemunerationService {
 	ResultatCalculRemuneration calculer(BulletinSalaire bulletin);
 	
 	HashMap<BulletinSalaire, ResultatCalculRemuneration> createHashMapBulletinSalaire();
+	
+	HashMap<BulletinSalaire, ResultatCalculRemuneration> createHashMapBulletinSalaire(Integer id);
+	
 }

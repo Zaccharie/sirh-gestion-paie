@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,8 +48,24 @@ public class BulletinController {
 		HashMap<BulletinSalaire, ResultatCalculRemuneration> buSalaire = calculerRemunerationServiceSimple.createHashMapBulletinSalaire();
 			
 		mv.setViewName("bulletins/listerBulletins");
-		//mv.addObject("bulletins", bulletins);
 		mv.addObject("buSalaire", buSalaire);
+		return mv;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/lister/{id}")
+	public ModelAndView visualiserBulletin(@PathVariable Integer id){
+	
+		ModelAndView mv = new ModelAndView();
+		
+		//BulletinSalaire bulletin = bulletinSalaireRepository.findOne(id);
+		//ResultatCalculRemuneration resultat = calculerRemunerationServiceSimple.calculer(bulletin);
+		
+		//Declaration map pour associer resultatCalculRemuneration à un bulletin
+		HashMap<BulletinSalaire, ResultatCalculRemuneration> buSalaire = calculerRemunerationServiceSimple.createHashMapBulletinSalaire(id);
+		
+		mv.setViewName("bulletins/afficherBulletin");
+		mv.addObject("buSalaire", buSalaire);
+		
 		return mv;
 	}
 	

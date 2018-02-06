@@ -99,5 +99,22 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		
 	} 
 	
+	@Override
+	@Transactional
+	public HashMap<BulletinSalaire, ResultatCalculRemuneration> createHashMapBulletinSalaire(Integer Id) {
+		
+		BulletinSalaire bulletins = bulletinSalaireRepository.findOne(Id);
+		
+		//Declaration map pour associer resultatCalculRemuneration à un bulletin
+		HashMap<BulletinSalaire, ResultatCalculRemuneration> buSalaire = new HashMap<BulletinSalaire, ResultatCalculRemuneration>();
+		
+		
+		buSalaire.put(bulletins, calculer(bulletins));
+		
+		
+		return buSalaire;
+		
+	} 
+	
 	
 }
