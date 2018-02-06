@@ -1,16 +1,19 @@
 package dev.paie.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Grade;
 import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.ResultatCalculRemuneration;
+import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.util.PaieUtils;
 
 @Service
@@ -18,6 +21,9 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 
 	@Autowired
 	private PaieUtils pu;
+	
+	@Autowired
+	private BulletinSalaireRepository bulletinSalaireRepository;
 	
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
@@ -29,9 +35,11 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		BigDecimal salaireBase = 
 				new BigDecimal(g.getNbHeuresBase().multiply(g.getTauxBase()).toString());
 		resultat.setSalaireDeBase(pu.formaterBigDecimal(salaireBase));
+		
 		BigDecimal salaireBrut = 
 				new BigDecimal(new BigDecimal(resultat.getSalaireDeBase()).add(bulletin.getPrimeExceptionnelle()).toString());
 		resultat.setSalaireBrut(pu.formaterBigDecimal(salaireBrut));
+		
 		BigDecimal totalRetenueSalarial = 
 				calculSommeCotisationSalarial(
 						pr.getCotisationsNonImposables(), 
@@ -73,6 +81,23 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 			.map(c -> c.getTauxPatronal().multiply(new BigDecimal(salaireBrut)))
 			.reduce((a,b) -> a.add(b)).orElse(new BigDecimal(0));
 	}
+	
+	@Override
+	@Transactional
+	public HashMap<BulletinSalaire, ResultatCalculRemuneration> createHashMapBulletinSalaire() {
+		
+		List<BulletinSalaire> bulletins = bulletinSalaireRepository.findAll();
+		
+		//Declaration map pour associer resultatCalculRemuneration à un bulletin
+		HashMap<BulletinSalaire, ResultatCalculRemuneration> buSalaire = new HashMap<BulletinSalaire, ResultatCalculRemuneration>();
+		
+		for(BulletinSalaire bu : bulletins) {
+			buSalaire.put(bu, calculer(bu));
+		}
+		
+		return buSalaire;
+		
+	} 
 	
 	
 }

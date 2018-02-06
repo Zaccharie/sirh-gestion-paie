@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page language="java" pageEncoding="UTF-8" isELIgnored="false" import="java.math.BigDecimal, dev.paie.util.PaieUtils" %>
+<%@ page language="java" pageEncoding="UTF-8" isELIgnored="false" import="java.math.BigDecimal" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,8 +29,11 @@
 			<div class="navbar-nav">
 				<a class="nav-item nav-link active" href="<c:url value='/mvc/employes/lister'/>">
 					Employés 
+				</a> 
+				<a class="nav-item nav-link" href="<c:url value='/mvc/bulletins/lister'/>">
+					Bulletins
 					<span class="sr-only">(current)</span>
-				</a> <a class="nav-item nav-link" href="<c:url value='/mvc/bulletins/lister'/>">Bulletins</a>
+				</a>
 			</div>
 		</div>
 	</nav>
@@ -39,58 +42,44 @@
 
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto">
-				<h1>Ajouter un employé</h1>
+				<h1>Créer bulletin de salaire</h1>
 			</div>
 		</div>
 		<br />
 		<div class="row">
 			<div class="container">
-				<form:form method="post" modelAttribute="remunerationEmploye" class="needs-validation" novalidate="novalidate">
+				<form:form method="post" modelAttribute="bulletinSalaire" class="needs-validation" novalidate="novalidate">
 					<div class="form-group row">
-						<form:label for="colFormLabelLg" path="matricule" 
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Matricule</form:label>
+						<form:label for="colFormLabelLg" path="periode.id" 
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Période</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:input path="matricule" type="text" class="form-control form-control-lg"
-								id="colFormLabelLg" required="required"/>
-							<div class="invalid-feedback">Le matricule est obligatoire.</div>
+							<form:select path="periode.id" class="custom-select">
+								<c:forEach items="${periodes}" var="p">
+									<option value="${p.id }">${p.dateDebut } - ${p.dateFin }</option>
+								</c:forEach>
+							</form:select>
 						</div>
 					</div>
 					<div class="form-group row">
-						<form:label for="colFormLabelLg" path="entreprise"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Entreprise</form:label>
+						<form:label for="colFormLabelLg" path="remunerationEmploye.id"
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Matricule</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:select path="entreprise.id" class="custom-select">
-								<c:forEach items="${entreprises}" var="e">
-									<option value="${e.id }">${e.denomination }</option>
+							<form:select path="remunerationEmploye.id" class="custom-select">
+								<c:forEach items="${employes}" var="e">
+									<option value="${e.id }">${e.matricule }</option>
 								</c:forEach>
 							</form:select>
 							<div class="invalid-feedback">
-								L'Entreprise est obligatoire.
+								Le matricule est obligatoire.
 							</div>
 						</div>
 					</div>
 					<div class="form-group row">
-						<form:label for="colFormLabelLg" path="profilRemuneration"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Profile</form:label>
+						<form:label for="colFormLabelLg" path="primeExceptionnelle"
+							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Prime exceptionnelle</form:label>
 						<div class="col-sm-12 col-md-7">
-							<form:select class="custom-select" path="profilRemuneration.id">
-								<c:forEach items="${profiles}" var="p">
-									<option value="${p.id }">${p.code }</option>
-								</c:forEach>
-							</form:select>
-							<div class="invalid-feedback">Le profil est obligatoire.</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<form:label for="colFormLabelLg" path="grade"
-							class="col-md-5 col-sm-12 col-form-label col-form-label-lg">Grade</form:label>
-						<div class="col-sm-12 col-md-7">
-							<form:select class="custom-select" path="grade.id">
-								<c:forEach items="${salairesAnnuelles}" var="sa">
-									<option value="${sa.getKey().id }">${sa.getKey().code} - ${sa.getValue() } € / an</option>
-								</c:forEach>
-							</form:select>
-							<div class="invalid-feedback">Le grade est obligatoire</div>
+							<form:input path="primeExceptionnelle" type="text" class="form-control form-control-lg"
+								id="colFormLabelLg"/>
 						</div>
 					</div>
 					<div class="form-group row">
