@@ -17,7 +17,6 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.RemunerationEmploye;
-import dev.paie.entite.Utilisateur.ROLES;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
@@ -45,6 +44,7 @@ public class RemunerationEmployeController {
 	
 	
 	@RequestMapping(method = RequestMethod.GET, path= "/lister")
+	@Secured({"ROLE_UTILISATEUR","ROLE_ADMINISTRATEUR"})
 	public ModelAndView listerEmploye(Model mode) {
 		
 		ModelAndView mv = new ModelAndView();

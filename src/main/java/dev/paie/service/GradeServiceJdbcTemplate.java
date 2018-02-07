@@ -26,19 +26,19 @@ public class GradeServiceJdbcTemplate implements GradeService {
 	
 	@Override
 	public void sauvegarder(Grade nouveauGrade) {
-		String sql = "INSERT INTO grade(CODE,NB_HEURES_BASE,TAUX_BASE) VALUES (?,?,?)";
+		String sql = "INSERT INTO Grade(code, nbHeuresBase, tauxBase) VALUES (?,?,?)";
 		jdbcTemplate.update(sql, nouveauGrade.getCode(), nouveauGrade.getNbHeuresBase(), nouveauGrade.getTauxBase());
 	}
 	
 	@Override
 	public void mettreAJour(Grade grade) {
-		String sql = "UPDATE grade SET CODE=?, NB_HEURES_BASE=?, TAUX_BASE=? WHERE ID = ?";
+		String sql = "UPDATE Grade SET code=?, nbHeuresBase=?, tauxBase=? WHERE id = ?";
 		jdbcTemplate.update(sql, grade.getCode(), grade.getNbHeuresBase(), grade.getTauxBase(), grade.getId());
 	}
 	
 	@Override
 	public List<Grade> lister(){
-		String sql = "SELECT * FROM grade";
+		String sql = "SELECT * FROM Grade";
 		return this.jdbcTemplate.query(sql, new GradeMapper());
 	}
 
@@ -47,10 +47,10 @@ public class GradeServiceJdbcTemplate implements GradeService {
 		@Override
 		public Grade mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Grade grade = new Grade();
-			grade.setId(rs.getInt("ID"));
-			grade.setCode(rs.getString("CODE"));
-			grade.setNbHeuresBase(rs.getBigDecimal("NB_HEURES_BASE"));
-			grade.setTauxBase(rs.getBigDecimal("TAUX_BASE"));
+			grade.setId(rs.getInt("id"));
+			grade.setCode(rs.getString("code"));
+			grade.setNbHeuresBase(rs.getBigDecimal("nbHeuresBase"));
+			grade.setTauxBase(rs.getBigDecimal("tauxBase"));
 			return grade;
 		}
 		

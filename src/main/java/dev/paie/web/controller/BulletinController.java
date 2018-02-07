@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +41,7 @@ public class BulletinController {
 	private CalculerRemunerationService calculerRemunerationServiceSimple;
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	@Secured({"ROLE_ADMINISTRATEUR", "ROLE_UTILISATEUR"})
 	public ModelAndView listerBulletins(){
 		
 		ModelAndView mv = new ModelAndView();
@@ -53,6 +55,7 @@ public class BulletinController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/lister/{id}")
+	@Secured({"ROLE_ADMINISTRATEUR","ROLE_UTILISATEUR"})
 	public ModelAndView visualiserBulletin(@PathVariable Integer id){
 	
 		ModelAndView mv = new ModelAndView();
@@ -70,6 +73,7 @@ public class BulletinController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerBulletin(Model model) {
 		
 		ModelAndView mv = new ModelAndView();
@@ -90,6 +94,7 @@ public class BulletinController {
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, path="/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public String submitForm(@ModelAttribute("bulletinSalaire") BulletinSalaire bulletinSalaire) {
 		if(bulletinSalaire.getPrimeExceptionnelle() == null) {
 			bulletinSalaire.setPrimeExceptionnelle(new BigDecimal("0"));
