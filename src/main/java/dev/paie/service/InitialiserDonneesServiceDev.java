@@ -7,7 +7,9 @@ import java.util.stream.IntStream;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +19,15 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.Utilisateur;
+import dev.paie.entite.Utilisateur.ROLES;
 
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	
 	@PersistenceContext private EntityManager em;
+	
+	@Autowired private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
@@ -57,7 +63,12 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 				p.setDateFin(Year.now().atMonth(i).atEndOfMonth());
 				em.persist(p);
 			});
-
+			
+			//creation d'utilisateurs
+			Utilisateur user = new Utilisateur("Zac", passwordEncoder.encode("zac"),true, ROLES.ROLE_ADMINISTRATEUR);
+			Utilisateur user2 = new Utilisateur("Jordan", passwordEncoder.encode("jordan"), true, ROLES.ROLE_UTILISATEUR);
+			em.persist(user);
+			em.persist(user2);
 		}
 
 	}
